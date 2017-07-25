@@ -1,11 +1,12 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import {Array} from "./src/Array";
+import {NewLifeCycle} from "./src/LifeCycle";
+
 
 let modalsNew = (
     <div>
-        <Array title = "Array Demo"/>
+        <NewLifeCycle title = "Life Cycle Demo" step = {2} />
 </div>
 );
 

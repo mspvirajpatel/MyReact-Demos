@@ -1,8 +1,10 @@
 import React from "react";
 
+//Array Add Remove
 export class Array extends React.Component {
     render() {
         return <div>
+            <h1>{this.props.title}</h1>
             <input type="text" value={this.state.temp} onChange={ this.onhandleChange } />
             <input type='button' onClick={this.add} value='Add'/>
             <input type='button' onClick={this.clear} value='Clear'/>

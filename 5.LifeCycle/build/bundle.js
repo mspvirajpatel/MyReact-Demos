@@ -9789,7 +9789,7 @@ var _reactDom = __webpack_require__(98);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Array = __webpack_require__(185);
+var _LifeCycle = __webpack_require__(184);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9802,7 +9802,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var modalsNew = _react2.default.createElement(
     "div",
     null,
-    _react2.default.createElement(_Array.Array, { title: "Array Demo" })
+    _react2.default.createElement(_LifeCycle.NewLifeCycle, { title: "Life Cycle Demo", step: 2 })
 );
 
 var App = function (_React$Component) {
@@ -22314,8 +22314,7 @@ module.exports = ReactDOMInvalidARIAHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 184 */,
-/* 185 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22324,7 +22323,7 @@ module.exports = ReactDOMInvalidARIAHook;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Array = undefined;
+exports.NewLifeCycle = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22340,93 +22339,109 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//Array Add Remove
-var Array = exports.Array = function (_React$Component) {
-    _inherits(Array, _React$Component);
+//NewLifeCycle Component
 
-    _createClass(Array, [{
-        key: "render",
+var NewLifeCycle = exports.NewLifeCycle = function (_React$Component) {
+    _inherits(NewLifeCycle, _React$Component);
+
+    _createClass(NewLifeCycle, [{
+        key: 'render',
         value: function render() {
+            console.log('render');
+            var step = this.props.step;
+            console.log(step);
+
             return _react2.default.createElement(
-                "div",
+                'div',
                 null,
                 _react2.default.createElement(
-                    "h1",
+                    'h1',
                     null,
                     this.props.title
                 ),
-                _react2.default.createElement("input", { type: "text", value: this.state.temp, onChange: this.onhandleChange }),
-                _react2.default.createElement("input", { type: "button", onClick: this.add, value: "Add" }),
-                _react2.default.createElement("input", { type: "button", onClick: this.clear, value: "Clear" }),
                 _react2.default.createElement(
-                    "h2",
+                    'div',
                     null,
-                    this.state.nameArr.map(function (singleName, index) {
-                        return _react2.default.createElement(
-                            "div",
-                            { key: index },
-                            _react2.default.createElement(
-                                "dt",
-                                null,
-                                singleName.name
-                            ),
-                            _react2.default.createElement("hr", null)
-                        );
-                    })
-                )
+                    this.state.count
+                ),
+                _react2.default.createElement('input', { type: 'button', value: '+', onClick: this.handleIncrement }),
+                _react2.default.createElement('input', { type: 'button', value: '-', onClick: this.handleDecrement }),
+                _react2.default.createElement('input', { type: 'button', value: '+2', onClick: this.updateCounter.bind(this, step) }),
+                _react2.default.createElement('input', { type: 'button', value: '-2', onClick: this.updateCounter.bind(this, -step) })
             );
         }
     }]);
 
     //consructor
-    function Array(props) {
-        _classCallCheck(this, Array);
 
-        var _this = _possibleConstructorReturn(this, (Array.__proto__ || Object.getPrototypeOf(Array)).call(this, props));
+
+    // propTypes: {
+    //     size: React.PropTypes.number,
+    //     position: React.PropTypes.string.isRequired
+    // }
+    //
+
+    // shouldComponentUpdate = (nextProps,nextState) =>
+    // {
+    //     console.log('componentWillUpdate', nextProps, nextState);
+    //
+    //     if (this.props.text === nextProps.text) return false;
+    //     return true;
+    // };
+    function NewLifeCycle(props) {
+        _classCallCheck(this, NewLifeCycle);
+
         //super consructor call
+        console.log('constructor');
 
+        var _this = _possibleConstructorReturn(this, (NewLifeCycle.__proto__ || Object.getPrototypeOf(NewLifeCycle)).call(this, props));
 
-        _this.add = function (e) {
-            var addName = {
-                name: _this.state.temp
-            };
-
-            _this.state.nameArr.push(addName);
-
-            _this.setState({
-                nameArr: _this.state.nameArr
-            });
+        _this.updateCounter = function (value) {
+            var newCount = _this.state.count + value;
+            _this.setState({ count: newCount });
         };
 
-        _this.clear = function (e) {
-
-            _this.setState({ temp: "" });
-            _this.setState({ nameArr: [] });
+        _this.handleIncrement = function (e) {
+            var newCount = _this.state.count + 1;
+            _this.setState({ count: newCount });
         };
 
-        _this.onhandleChange = function (e) {
-
-            // with State event
-            _this.setState({ temp: e.target.value });
+        _this.handleDecrement = function (e) {
+            var newCount = _this.state.count - 1;
+            _this.setState({ count: newCount });
         };
 
+        _this.componentWillMount = function (e) {
+            console.log('componentWillMount');
+        };
+
+        _this.componentDidMount = function (e) {
+            console.log('componentDidMount');
+        };
+
+        _this.componentWillUpdate = function (e) {
+            console.log('componentWillUpdate');
+        };
+
+        _this.componentDidUpdate = function (e) {
+            console.log('componentDidUpdate');
+        };
+
+        _this.componetWillUnmount = function (e) {
+            console.log('componentDidUpdate');
+            $(_this._ref).__self('destroy');
+        };
+
+        console.log(props);
+        // this.props.title = "Counter";
+        // this.props.step = 1;
         _this.state = {
-            nameArr: [{
-                name: 'Viraj'
-            }, {
-                name: 'Test'
-            }, {
-                name: 'Jaymin'
-            }],
-            temp: ""
+            count: 0
         };
         return _this;
     }
 
-    //on text Chnage Event
-
-
-    return Array;
+    return NewLifeCycle;
 }(_react2.default.Component);
 
 /***/ })
